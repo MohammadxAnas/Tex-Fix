@@ -50,7 +50,7 @@ function Home(props) {
       </div>
       <br/>
       <div className='btns'>
-      <button className='btn' onClick={toUpper}>Upper Case</button>
+      <button className='btn' onClick={toUpper}>Upper</button>
       <button className='btn' onClick={toLower}>Lower Case</button>
       <button className='btn' onClick={cleartxt}>Clear</button>
       <button className='extra' onClick={extraSpaces}>Remove Extra Spaces</button>

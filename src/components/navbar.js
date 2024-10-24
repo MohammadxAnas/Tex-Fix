@@ -10,8 +10,8 @@ function Navbar(props){
         <h2>Tex-Fix</h2>
     </div>
      <nav className='about'>
-           <NavLink className={(e)=>{return e.isActive?"red":""}} to="/"><li>Home</li></NavLink> 
-            <NavLink className={(e)=>{return e.isActive?"red":""}} to="/About"><li>About</li></NavLink>
+           <NavLink className={(e)=>{return e.isActive?"red":"blue"}} to="/"><li>Home</li></NavLink> 
+            <NavLink className={(e)=>{return e.isActive?"red":"blue"}} to="/About"><li>About</li></NavLink>
      </nav>
      <button className='modebtn' onClick={props.bgcolor}>{props.mode}</button>
    </div> 
