@@ -2,6 +2,7 @@
     margin: 0%;
     padding: 0%;
 }
+
 h1{
     display: flex;
     justify-content: center;
@@ -67,7 +68,7 @@ p{
 }
 .logo{
     display: flex;
-
+    align-items: center;
 }
 
 .about  {
@@ -81,8 +82,7 @@ li{
     list-style: none;
 }
 .red{
-    background-color: 'red';
-    color: red;
+    color: black;
     border-radius: 5px;
     width: 2.7rem;
     height: 1.3rem;
@@ -91,7 +91,6 @@ li{
     list-style: none;  
 }
 .blue{
-    background-color: '#edede9';
     color: white;
     border-radius: 5px;
     width: 2.7rem;
@@ -102,7 +101,6 @@ li{
 }
 p{
    
-    text-align: center;
 }
 ::placeholder{
     color: black;
@@ -131,5 +129,12 @@ textarea{
     padding-right: 20px;
 }
 .aboutpg{
-    height: 100vh;
+    min-height: 100vh;
+    padding: 0 10px 0 10px;
+}
+nav{
+    margin-left: 30px;
+}
+.head{
+    margin-bottom: 5px;
 }
