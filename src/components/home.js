@@ -40,6 +40,15 @@ function Home(props) {
     }
    
   }
+  const textarea = document.getElementById('myTextarea');
+  document.addEventListener('mouseup', function() {
+    if(textarea.value!=null){
+      const selectedText = textarea.value.substring(textarea.selectionStart,textarea.selectionEnd);
+      console.log(selectedText);
+    }
+  
+  });
+  
   
     return(
    <>
