@@ -99,9 +99,6 @@ li{
     text-decoration: none;
     list-style: none;  
 }
-p{
-   
-}
 ::placeholder{
     color: black;
 }
@@ -138,3 +135,15 @@ nav{
 .head{
     margin-bottom: 5px;
 }
+.toolkit {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 1000;
+  }
+  
+  .hidden {
+    display: none;
+  }
