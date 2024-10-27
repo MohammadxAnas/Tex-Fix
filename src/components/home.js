@@ -1,72 +1,88 @@
-import {useState} from 'react';
+import {useState,useRef} from 'react';
 import './hq.css';
 
 function Home(props) {
-
-    let [selectedText, setSelectedText] = useState('');
-    const handleMouseUp = (event) => {
-      const textarea = event.target;
-      const stdtext = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
+    let textarea=document.getElementById("mytextarea");
+    let textarearef=useRef(null);
+    const [selectedText, setSelectedText] = useState('');
+    const toolkitref=useRef(null);
+    const handleMouseUp = () => {
+      let textarea= textarearef.current;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const toolkit = document.getElementById('toolkit');
+      if(start!==end){
+      const stdtext = textarea.value.substring(start, end);
       setSelectedText(stdtext);
       console.log(selectedText);
-      const toolkit = document.getElementById('toolkit');
-      if(selectedText){
       const range = window.getSelection().getRangeAt(0);
       const rect = range.getBoundingClientRect();
+      const toolkit = document.getElementById('toolkit');
       toolkit.style.left = `${rect.left + window.scrollX}px`;
       toolkit.style.top = `${rect.bottom + window.scrollY}px`;
       toolkit.classList.remove('hidden');
       }
-      else {
-        toolkit.classList.add('hidden');
+      else{
+      setSelectedText('');
+      toolkit.classList.add('hidden');
       }
   }
    
  
   let [text,setText]= useState("")
   const toUpper=()=>{
-    if(text.length!==0){
-      let newtxt=text.toUpperCase();
-      setText(newtxt)
-    }   
+    let textarea= textarearef.current;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+
+    textarea.value = text.slice(0, start) + text.slice(start, end).toUpperCase() + text.slice(end);
+    textarea.focus();
+    setSelectedText('');
   }
   const toLower=()=>{
-    if(text.length!==0){
-      let ltext=text.toLowerCase()
-      setText(ltext)
-    }
+    let textarea= textarearef.current;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+
+    textarea.value = text.slice(0, start) + text.slice(start, end).toLowerCase() + text.slice(end);
+    textarea.focus();
+    setSelectedText('');
   }
-  const handleChange=(event)=>{
-      setText(event.target.value)
-  }
+ 
   const cleartxt=()=>{
-    if(text.length!==0){
-      setText("")
-    }
-   
+    let textarea= textarearef.current;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+    textarea.value = text.slice(0, start) + text.slice(end);
+    textarea.focus();
+    setSelectedText('');
   }
   
   const extraSpaces=()=>{
-    if(text.length!==0){
-      let ntxt=text.split(/[ ]+/);
-      setText(ntxt.join(" "))
-    }
-   
+    let textarea= textarearef.current;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+    let ntxt=text.slice(start,end).split(/[ ]+/).join(" ");
+
+    textarea.value = text.slice(0, start) + ntxt + text.slice(end);
+    textarea.focus();
+    setSelectedText('');
   }
   const cpyText=()=>{
-    if(text.length!==0){
-      navigator.clipboard.writeText(text)
+    if(selectedText.length!==0){
+      navigator.clipboard.writeText(selectedText)
       alert("Text copied to clipboard!")
     }
   }
-  const copy=()=>{
-    navigator.clipboard.writeText(selectedText)
-      alert("Text copied to clipboard!")
-  }
+  
     return(
    <>
-   <div id="toolkit" className="toolkit hidden">
-      <button className='btn' onClick={toUpper}>Upper</button>
+   <div id="toolkit" ref={toolkitref} className="toolkit hidden">
+      <button className='btn' onClick={toUpper}>Upper Case</button>
       <button className='btn' onClick={toLower}>Lower Case</button>
       <button className='btn' onClick={cleartxt}>Clear</button>
       <button className='extra' onClick={extraSpaces}>Remove Extra Spaces</button>
@@ -75,16 +91,10 @@ function Home(props) {
       <div className='home' style={props.color}>
       <h1>Enter the text below</h1>
       <div className='txtarea'>
-      <textarea id='myTextarea' style={props.mycolor} placeholder='Enter any text' value={text} onChange={handleChange} rows={8} onMouseUp={handleMouseUp} ></textarea>
+      <textarea id='myTextarea' style={props.mycolor} placeholder='Enter any text' ref={textarearef} rows={8} onMouseUp={handleMouseUp} ></textarea>
       </div>
       <br/>
-      <div className='btns'>
-      <button className='btn' onClick={toUpper}>Upper</button>
-      <button className='btn' onClick={toLower}>Lower Case</button>
-      <button className='btn' onClick={cleartxt}>Clear</button>
-      <button className='extra' onClick={extraSpaces}>Remove Extra Spaces</button>
-      <button className='btn' onClick={cpyText}>Copy Text</button>
-      </div>
+      
       <br/>
       < div className='count'>
       <h3>Count-</h3>

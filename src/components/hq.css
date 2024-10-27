@@ -38,23 +38,11 @@ p{
    
 }
 .btn{
-    border-radius: 10px;
-    border: none;
-    background-color:#98c1d9;
-    border: 1px solid black;
-    height: 2.1rem;
-    width: 5rem;
     cursor: pointer;
 }
 
 
 .extra{
-    border-radius: 10px;
-    border: none;
-    height: 2.1rem;
-    width: 10rem;
-    background-color:#98c1d9;
-    border: 1px solid black;
     cursor: pointer;
 }
 .navbar{
@@ -139,6 +127,8 @@ nav{
     position: absolute;
     background-color: white;
     border: 1px solid #ccc;
+    display: flex;
+    gap: 5px;
     padding: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     z-index: 1000;
