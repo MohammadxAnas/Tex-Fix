@@ -1,32 +1,48 @@
-import {useState,useRef} from 'react';
+import {useState,useRef,useEffect} from 'react';
 import './hq.css';
 
 function Home(props) {
-    let textarea=document.getElementById("mytextarea");
-    let textarearef=useRef(null);
-    const [selectedText, setSelectedText] = useState('');
-    const toolkitref=useRef(null);
-    const handleMouseUp = () => {
-      let textarea= textarearef.current;
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const toolkit = document.getElementById('toolkit');
-      if(start!==end){
-      const stdtext = textarea.value.substring(start, end);
-      setSelectedText(stdtext);
-      console.log(selectedText);
-      const range = window.getSelection().getRangeAt(0);
-      const rect = range.getBoundingClientRect();
-      const toolkit = document.getElementById('toolkit');
-      toolkit.style.left = `${rect.left + window.scrollX}px`;
-      toolkit.style.top = `${rect.bottom + window.scrollY}px`;
-      toolkit.classList.remove('hidden');
+  const [selectedText, setSelectedText] = useState('');
+  const textarearef = useRef(null);
+  const toolkitref = useRef(null);
+  const mirrorDivRef = useRef(null);
+
+  useEffect(() => {
+    if (selectedText) {
+      const textarea = textarearef.current;
+      const mirrorDiv = mirrorDivRef.current;
+
+      mirrorDiv.innerHTML = textarea.value.substring(0, textarea.selectionStart)
+        + `<span id="highlighted">${textarea.value.substring(textarea.selectionStart, textarea.selectionEnd)}</span>`
+        + textarea.value.substring(textarea.selectionEnd);
+      
+      const highlightSpan = mirrorDiv.querySelector("#highlighted");
+      if (highlightSpan) {
+        const rect = highlightSpan.getBoundingClientRect();
+        
+        // Adjust toolkit position for more precise alignment
+        const toolkit = toolkitref.current;
+        console.log(toolkit)
+        toolkit.style.left = `${rect.left+90}px`;
+        toolkit.style.top = `${rect.top-388}px`; // smaller offset below text
+        
+        toolkit.classList.remove('hidden');
       }
-      else{
+    }
+  }, [selectedText]);
+
+  const handleMouseUp = () => {
+    const textarea = textarearef.current;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+
+    if (start !== end) {
+      setSelectedText(textarea.value.substring(start, end));
+    } else {
       setSelectedText('');
-      toolkit.classList.add('hidden');
-      }
-  }
+      toolkitref.current.classList.add('hidden');
+    }
+  };
    
  
   let [text,setText]= useState("")
@@ -105,6 +121,11 @@ function Home(props) {
         <p>{((text.split(/\s+/).filter((element)=>{return element.length!==0})).length)*0.4 } Seconds</p>
       </div>
       <br/>
+      <div
+        ref={mirrorDivRef}
+        className="mirror-div"
+        aria-hidden="true"
+      ></div>
       </div>  
    </>
     )
